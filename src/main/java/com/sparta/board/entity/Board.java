@@ -39,4 +39,5 @@ public class Board extends Timestamped {
         this.pw = requestDto.getPw();
         this.content = requestDto.getContents();
     }
+
 }

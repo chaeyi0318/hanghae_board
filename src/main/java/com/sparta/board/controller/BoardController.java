@@ -29,13 +29,21 @@ public class BoardController {
         return boardService.createPost(requestDto);
     }
 
-    @PutMapping("/api/boards/{id}")
-    public Long updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto) {
-        return boardService.updateBoard(id, requestDto);
+    //게시글 삭제
+    @DeleteMapping("/api/boards/{id}")
+    public Long deleteBoard(@PathVariable Long id, @RequestBody BoardRequestDto requestDto) {
+        return boardService.deleteBoard(id, requestDto);
     }
 
-    @DeleteMapping("/api/boards/{id}")
-    public Long deleteBoard(@PathVariable Long id) {
-        return boardService.deleteBoard(id);
+    //게시글 수정
+    @PutMapping("/api/boards/{id}")
+    public Long update(@PathVariable Long id, @RequestBody BoardRequestDto requestDto) {
+        return boardService.update(id, requestDto);
+    }
+
+    //게시글 하나 조회
+    @GetMapping("/api/boards/{id}")
+    public List<Board> getContents(@PathVariable Long id) {
+        return boardService.getContents(id);
     }
 }
