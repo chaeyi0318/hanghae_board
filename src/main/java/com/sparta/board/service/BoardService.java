@@ -19,12 +19,14 @@ public class BoardService {
         return boardRepository.findAllByOrderByModifiedAtDesc();
     }
 
+    @Transactional
     public Board createPost(BoardRequestDto requestDto) {
         Board board = new Board(requestDto);
         boardRepository.save(board);
         return board;
     }
 
+    @Transactional
     public Long updateBoard(Long id, BoardRequestDto requestDto) {
         Board board = boardRepository.findById(id).orElseThrow(
                 () ->  new IllegalArgumentException("아이디가 존재하지 않습니다.")
@@ -33,6 +35,7 @@ public class BoardService {
         return board.getId();
     }
 
+    @Transactional
     public Long deleteBoard(Long id) {
         boardRepository.deleteById(id);
         return id;
