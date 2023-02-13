@@ -27,4 +27,9 @@ public class User {
     @Size(min = 8, max = 15)
     @Pattern(regexp = "[A-Za-z0-9]")
     String password;
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }
