@@ -26,6 +26,10 @@ public class Board extends Timestamped {
     @Column(nullable = false)
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     public Board(BoardRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.writer = requestDto.getWriter();
