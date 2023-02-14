@@ -31,11 +31,16 @@ public class User {
     @Pattern(regexp = "[a-zA-Z0-9]+")
     String password;
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum role;
+
     @OneToMany(mappedBy = "user")
     private List<Board> boardList = new ArrayList<>();
 
-    public User(String username, String password) {
+    public User(String username, String password, UserRoleEnum role) {
         this.username = username;
         this.password = password;
+        this.role = role;
     }
 }

@@ -29,7 +29,7 @@ public class Board extends Timestamped {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    public Board(BoardRequestDto requestDto, String  username) {
+    public Board(BoardRequestDto requestDto, String username) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         this.username = username;
