@@ -2,6 +2,7 @@ package com.sparta.board.service;
 
 import com.sparta.board.dto.LoginRequestDto;
 import com.sparta.board.dto.SignupRequestDto;
+import com.sparta.board.dto.UserResponseDto;
 import com.sparta.board.entity.User;
 import com.sparta.board.jwt.JwtUtil;
 import com.sparta.board.repository.UserRepository;
@@ -28,8 +29,7 @@ public class UserService {
         if(found.isPresent()) {
             throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
         }
-        User user = new User(username, password);
-
+        User user = new User(requestDto.getUsername(), requestDto.getPassword());
         userRepository.save(user);
     }
 

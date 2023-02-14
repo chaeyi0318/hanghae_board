@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class User {
     @Id
+//    @Column(name = "USER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -30,8 +31,8 @@ public class User {
     @Pattern(regexp = "[a-zA-Z0-9]+")
     String password;
 
-    @OneToMany
-    List<Board> boardList = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Board> boardList = new ArrayList<>();
 
     public User(String username, String password) {
         this.username = username;
