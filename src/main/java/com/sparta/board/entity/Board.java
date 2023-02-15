@@ -12,10 +12,8 @@ import javax.persistence.*;
 public class Board extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "BOARD_ID")
     private Long id;
-
-    @Column(nullable = false)
-    private String username;
 
     @Column(nullable = false)
     private String title;
@@ -25,12 +23,12 @@ public class Board extends Timestamped {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
-    private User user;
+    private Users users;
 
-    public Board(BoardRequestDto requestDto, String username) {
+    public Board(BoardRequestDto requestDto, Users users) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
-        this.username = username;
+        this.users = users;
     }
 
     public void update(BoardRequestDto requestDto) {

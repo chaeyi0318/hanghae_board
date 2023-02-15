@@ -3,7 +3,7 @@ package com.sparta.board.service;
 import com.sparta.board.dto.BoardRequestDto;
 import com.sparta.board.dto.BoardResponseDto;
 import com.sparta.board.entity.Board;
-import com.sparta.board.entity.User;
+import com.sparta.board.entity.Users;
 import com.sparta.board.jwt.JwtUtil;
 import com.sparta.board.repository.BoardRepository;
 import com.sparta.board.repository.UserRepository;
@@ -41,11 +41,11 @@ public class BoardService {
                 throw new IllegalArgumentException("Token Error");
             }
 
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+            Users users = userRepository.findByUsername(claims.getSubject()).orElseThrow(
                     () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
             );
 
-            Board board = boardRepository.saveAndFlush(new Board(requestDto, user.getUsername()));
+            Board board = boardRepository.saveAndFlush(new Board(requestDto, users));
 
             return new BoardResponseDto(board);
         } else {
@@ -55,7 +55,7 @@ public class BoardService {
 
     //게시글 상세 조회
     @Transactional(readOnly = true)
-    public List<Board> getContents(Long id) {
+    public List<BoardResponseDto> getContents(Long id) {
         return boardRepository.findByIdOrderByModifiedAtDesc(id);
     }
 
@@ -72,7 +72,7 @@ public class BoardService {
                 throw new IllegalArgumentException("Token Error");
             }
 
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+            Users users = userRepository.findByUsername(claims.getSubject()).orElseThrow(
                     () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
             );
 
@@ -80,7 +80,7 @@ public class BoardService {
                     () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
             );
 
-            if (claims.getSubject().equals(board.getUsername())) {
+            if (claims.getSubject().equals(board.getUsers().getUsername())) {
                 board.update(requestDto);
                 return new BoardResponseDto(board);
             } else {
@@ -104,7 +104,7 @@ public class BoardService {
                 throw new IllegalArgumentException("Token Error");
             }
 
-            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+            Users users = userRepository.findByUsername(claims.getSubject()).orElseThrow(
                     () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
             );
 
@@ -112,7 +112,7 @@ public class BoardService {
                     () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
             );
 
-            if (claims.getSubject().equals(board.getUsername())) {
+            if (claims.getSubject().equals(board.getUsers().getUsername())) {
                 boardRepository.deleteById(id);
                 return "게시글 삭제 성공";
             } else {

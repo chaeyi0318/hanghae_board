@@ -3,19 +3,15 @@ package com.sparta.board.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
-@Entity(name = "users")
+@Entity
 @Getter
 @NoArgsConstructor
-public class User {
+public class Users {
     @Id
     @Column(name = "USER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +34,7 @@ public class User {
 //    @OneToMany(mappedBy = "user")
 //    private List<Board> boardList = new ArrayList<>();
 
-    public User(String username, String password, UserRoleEnum role) {
+    public Users(String username, String password, UserRoleEnum role) {
         this.username = username;
         this.password = password;
         this.role = role;

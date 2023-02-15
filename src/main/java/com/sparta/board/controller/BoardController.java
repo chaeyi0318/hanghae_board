@@ -36,7 +36,7 @@ public class BoardController {
 
     //게시글 상세 조회
     @GetMapping("/post/{id}")
-    public List<Board> getContents(@PathVariable Long id) {
+    public List<BoardResponseDto> getContents(@PathVariable Long id) {
         return boardService.getContents(id);
     }
 

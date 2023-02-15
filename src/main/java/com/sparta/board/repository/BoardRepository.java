@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
     List<BoardResponseDto> findAllByOrderByModifiedAtDesc();
-    List<Board> findByIdOrderByModifiedAtDesc(Long id);
+    List<BoardResponseDto> findByIdOrderByModifiedAtDesc(Long id);
 }

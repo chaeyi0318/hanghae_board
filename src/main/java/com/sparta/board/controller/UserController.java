@@ -2,8 +2,6 @@ package com.sparta.board.controller;
 
 import com.sparta.board.dto.LoginRequestDto;
 import com.sparta.board.dto.SignupRequestDto;
-import com.sparta.board.dto.UserResponseDto;
-import com.sparta.board.entity.User;
 import com.sparta.board.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

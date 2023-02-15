@@ -3,8 +3,10 @@ package com.sparta.board.entity;
 import com.sparta.board.dto.CommentRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.catalina.User;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -15,13 +17,19 @@ public class Comment extends Timestamped{
     private Long id;
 
     @Column(nullable = false)
-    private String username;
-
-    @Column(nullable = false)
     private String comments;
 
-    public Comment(CommentRequestDto requestDto, Board board, String username) {
-        this.username = username;
+    @ManyToOne
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private Users users;
+
+    @ManyToOne
+    @JoinColumn(name = "BOARD_ID", nullable = false)
+    private Board board;
+
+    public Comment(CommentRequestDto requestDto, Board board, Users users) {
+        this.users = users;
+        this.board = board;
         this.comments = requestDto.getComments();
     }
 }

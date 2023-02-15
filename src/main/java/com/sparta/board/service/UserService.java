@@ -2,8 +2,7 @@ package com.sparta.board.service;
 
 import com.sparta.board.dto.LoginRequestDto;
 import com.sparta.board.dto.SignupRequestDto;
-import com.sparta.board.dto.UserResponseDto;
-import com.sparta.board.entity.User;
+import com.sparta.board.entity.Users;
 import com.sparta.board.entity.UserRoleEnum;
 import com.sparta.board.jwt.JwtUtil;
 import com.sparta.board.repository.UserRepository;
@@ -26,7 +25,7 @@ public class UserService {
         String username = requestDto.getUsername();
         String password = requestDto.getPassword();
 
-        Optional<User> found = userRepository.findByUsername(username);
+        Optional<Users> found = userRepository.findByUsername(username);
 
         if(found.isPresent()) {
             throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
@@ -41,8 +40,8 @@ public class UserService {
             role = UserRoleEnum.ADMIN;
         }
 
-        User user = new User(username, password, role);
-        userRepository.save(user);
+        Users users = new Users(username, password, role);
+        userRepository.save(users);
     }
 
     @Transactional
@@ -50,14 +49,14 @@ public class UserService {
         String username = loginRequestDto.getUsername();
         String password = loginRequestDto.getPassword();
 
-        User user = userRepository.findByUsername(username).orElseThrow(
+        Users users = userRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException("등록된 사용자가 없습니다.")
         );
 
-        if(!user.getPassword().equals(password)) {
+        if(!users.getPassword().equals(password)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(users.getUsername(), users.getRole()));
     }
 }
