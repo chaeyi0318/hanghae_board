@@ -2,8 +2,11 @@ package com.sparta.board.controller;
 
 import com.sparta.board.dto.BoardRequestDto;
 import com.sparta.board.dto.BoardResponseDto;
+import com.sparta.board.dto.CommentResponseDto;
 import com.sparta.board.entity.Board;
+import com.sparta.board.entity.Comment;
 import com.sparta.board.service.BoardService;
+import com.sparta.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService boardService;
+    private final CommentService commentService;
 
     @GetMapping("/")
     public ModelAndView home() {
@@ -37,6 +41,7 @@ public class BoardController {
     //게시글 상세 조회
     @GetMapping("/post/{id}")
     public List<BoardResponseDto> getContents(@PathVariable Long id) {
+        List<CommentResponseDto> commentList = commentService.commentsList(id);
         return boardService.getContents(id);
     }
 

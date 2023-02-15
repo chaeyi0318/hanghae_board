@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -81,6 +82,7 @@ public class CommentService {
         return null;
     }
 
+    //댓글 삭제
     public String deleteComment(Long id, HttpServletRequest request) {
         String token = jwtUtil.resolveToken(request);
         Claims claims;
@@ -104,5 +106,11 @@ public class CommentService {
             }
         }
         return "토큰이 없습니다";
+    }
+
+    //댓글 리스트
+    @Transactional(readOnly = true)
+    public List<CommentResponseDto> commentsList(Long id) {
+        return commentRepository.findByIdOrderByCreatedAtDesc(id);
     }
 }

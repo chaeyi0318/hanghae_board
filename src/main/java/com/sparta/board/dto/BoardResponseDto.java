@@ -1,6 +1,7 @@
 package com.sparta.board.dto;
 
 import com.sparta.board.entity.Board;
+import com.sparta.board.entity.Comment;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ public class BoardResponseDto {
     private String title;
     private String contents;
     private String username;
+    private List<Comment> commentList;
 
 //    private List<Board> boardList = new ArrayList<>();
 
@@ -22,5 +24,13 @@ public class BoardResponseDto {
         this.title = board.getTitle();
         this.username = board.getUsers().getUsername();
         this.contents = board.getContents();
+    }
+
+    public BoardResponseDto(Board board, List<Comment> commentList) {
+        this.id = board.getId();
+        this.title = board.getTitle();
+        this.username = board.getUsers().getUsername();
+        this.contents = board.getContents();
+        this.commentList = commentList;
     }
 }
