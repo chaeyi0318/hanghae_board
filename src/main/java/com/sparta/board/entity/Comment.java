@@ -32,4 +32,8 @@ public class Comment extends Timestamped{
         this.board = board;
         this.comments = requestDto.getComments();
     }
+
+    public void updateComment(CommentRequestDto commentRequestDto) {
+        this.comments = commentRequestDto.getComments();
+    }
 }

@@ -1,6 +1,5 @@
 package com.sparta.board.service;
 
-import com.sparta.board.dto.BoardResponseDto;
 import com.sparta.board.dto.CommentRequestDto;
 import com.sparta.board.dto.CommentResponseDto;
 import com.sparta.board.entity.Board;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,15 +23,15 @@ public class CommentService {
     private final BoardRepository boardRepository;
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
-    
+
     //댓글 등록
     @Transactional
     public CommentResponseDto createComment(Long id, CommentRequestDto commentRequestDto, HttpServletRequest request) {
         String token = jwtUtil.resolveToken(request);
         Claims claims;
 
-        if(token != null) {
-            if(jwtUtil.validateToken(token)) {
+        if (token != null) {
+            if (jwtUtil.validateToken(token)) {
                 claims = jwtUtil.getUserInfoFromToken(token);
             } else {
                 throw new IllegalArgumentException("Token Error");
@@ -53,5 +51,58 @@ public class CommentService {
         } else {
             return null;
         }
+    }
+
+    //댓글 수정
+    @Transactional
+    public CommentResponseDto updateComment(Long id, CommentRequestDto commentRequestDto, HttpServletRequest request) {
+        String token = jwtUtil.resolveToken(request);
+        Claims claims;
+
+        if (token != null) {
+            if (jwtUtil.validateToken(token)) {
+                claims = jwtUtil.getUserInfoFromToken(token);
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+
+            Comment comment = commentRepository.findById(id).orElseThrow(
+                    () -> new IllegalArgumentException("댓글이 존재하지 않습니다.")
+            );
+
+            if (!claims.getSubject().equals(comment.getUsers().getUsername())) {
+                throw new IllegalArgumentException("작성자가 다릅니다.");
+
+            } else {
+                comment.updateComment(commentRequestDto);
+                return new CommentResponseDto(comment);
+            }
+        }
+        return null;
+    }
+
+    public String deleteComment(Long id, HttpServletRequest request) {
+        String token = jwtUtil.resolveToken(request);
+        Claims claims;
+
+        if(token != null) {
+            if(jwtUtil.validateToken(token)) {
+                claims = jwtUtil.getUserInfoFromToken(token);
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+
+            Comment comment = commentRepository.findById(id).orElseThrow(
+                    () -> new IllegalArgumentException("댓글이 존재하지 않습니다.")
+            );
+
+            if(!claims.getSubject().equals(comment.getUsers().getUsername())) {
+                throw new IllegalArgumentException("작성자가 다릅니다.");
+            } else {
+                commentRepository.deleteById(id);
+                return "댓글이 삭제됐습니다.";
+            }
+        }
+        return "토큰이 없습니다";
     }
 }
