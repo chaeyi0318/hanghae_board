@@ -5,9 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +24,7 @@ public class Board extends Timestamped {
     private String contents;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     public Board(BoardRequestDto requestDto, String username) {
@@ -39,5 +37,4 @@ public class Board extends Timestamped {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
     }
-
 }

@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class User {
     @Id
-//    @Column(name = "USER_ID")
+    @Column(name = "USER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -28,15 +28,15 @@ public class User {
 
     @Column(nullable = false)
     @Size(min = 8, max = 15)
-    @Pattern(regexp = "[a-zA-Z0-9]+")
+    @Pattern(regexp = "[a-zA-Z0-9`~!@#$%^&*()-_=+]+")
     String password;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
-    @OneToMany(mappedBy = "user")
-    private List<Board> boardList = new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    private List<Board> boardList = new ArrayList<>();
 
     public User(String username, String password, UserRoleEnum role) {
         this.username = username;

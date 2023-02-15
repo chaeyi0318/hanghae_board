@@ -24,7 +24,7 @@ public class BoardService {
 
     //게시글 전체 조회
     @Transactional(readOnly = true)
-    public List<Board> getBoard() {
+    public List<BoardResponseDto> getBoard() {
         return boardRepository.findAllByOrderByModifiedAtDesc();
     }
 

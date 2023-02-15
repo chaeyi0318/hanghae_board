@@ -24,7 +24,7 @@ public class BoardController {
 
     //게시글 전체 조회
     @GetMapping("/posts")
-    public List<Board> getBoard() {
+    public List<BoardResponseDto> getBoard() {
         return boardService.getBoard();
     }
 
