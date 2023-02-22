@@ -48,6 +48,11 @@ public class WebSecurityConfig {
 
         http.authorizeRequests().antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/**").permitAll()
+                .antMatchers(
+                        "/v3/api-docs/**",
+                        "/swagger*/**",
+                        "/swagger-ui/**",
+                        "/swagger-resources/**").permitAll()
                 .anyRequest().authenticated()
                 // JWT 인증/인가를 사용하기 위한 설정
                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);

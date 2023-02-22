@@ -8,6 +8,9 @@ import com.sparta.board.entity.Comment;
 import com.sparta.board.security.UserDetailsImpl;
 import com.sparta.board.service.BoardService;
 import com.sparta.board.service.CommentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +37,13 @@ public class BoardController {
         return boardService.getBoard();
     }
 
+//    @Operation(summary = "test hello", description = "hello api example")
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "200", description = "OK !!"),
+//            @ApiResponse(responseCode = "400", description = "BAD REQUEST !!"),
+//            @ApiResponse(responseCode = "404", description = "NOT FOUND !!"),
+//            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
+//    })
     //게시글 등록
     @PostMapping("/post")
     public BoardResponseDto createPost(@RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {

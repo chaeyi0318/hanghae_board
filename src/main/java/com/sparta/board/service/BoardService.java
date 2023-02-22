@@ -19,9 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
-    private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
-    private final CommentRepository commentRepository;
 
     //게시글 전체 조회
     @Transactional(readOnly = true)
@@ -51,10 +49,10 @@ public class BoardService {
         );
 
         Board board = boardRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
+                () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
         );
 
-        if (users.getUsername().equals(board.getUsers().getUsername())) {
+        if (users.getUsername().equals(board.getUsers().getUsername()) || users.getRole().equals("ROLE_ADMIN")) {
             board.update(requestDto);
             return new BoardResponseDto(board);
         } else {
@@ -70,10 +68,10 @@ public class BoardService {
         );
 
         Board board = boardRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
+                () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
         );
 
-        if (users.getUsername().equals(board.getUsers().getUsername())) {
+        if (users.getUsername().equals(board.getUsers().getUsername()) || users.getRole().equals("ROLE_ADMIN")) {
             boardRepository.deleteById(id);
             return "게시글 삭제 성공";
         } else {
