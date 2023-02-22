@@ -15,7 +15,7 @@ public class BoardResponseDto {
     private String title;
     private String contents;
     private String username;
-    private List<Comment> commentList;
+    private List<CommentResponseDto> commentList;
 
 //    private List<Board> boardList = new ArrayList<>();
 
@@ -26,7 +26,7 @@ public class BoardResponseDto {
         this.contents = board.getContents();
     }
 
-    public BoardResponseDto(Board board, List<Comment> commentList) {
+    public BoardResponseDto(Board board, List<CommentResponseDto> commentList) {
         this.id = board.getId();
         this.title = board.getTitle();
         this.username = board.getUsers().getUsername();

@@ -3,10 +3,8 @@ package com.sparta.board.entity;
 import com.sparta.board.dto.CommentRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Entity
 @Getter

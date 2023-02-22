@@ -35,46 +35,25 @@ public class BoardController {
     }
 
     //게시글 등록
-//    @PostMapping("/post")
-//    public BoardResponseDto createPost(@RequestBody BoardRequestDto requestDto, HttpServletRequest request) {
-//        return boardService.createPost(requestDto, request);
-//    }
-
     @PostMapping("/post")
     public BoardResponseDto createPost(@RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return boardService.createPost(requestDto, userDetails.getUser());
     }
 
     //게시글 상세 조회
-//    @GetMapping("/post/{id}")
-//    public List<BoardResponseDto> getContents(@PathVariable Long id) {
-//        List<CommentResponseDto> commentList = commentService.commentsList(id);
-//        return boardService.getContents(id);
-//    }
-
     @GetMapping("/post/{id}")
-    public List<BoardResponseDto> getContents(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public BoardResponseDto getContents(@PathVariable Long id) {
         List<CommentResponseDto> commentList = commentService.getComment(id);
-        return boardService.getContents(id, userDetails.getUser());
+        return (BoardResponseDto) boardService.getContents(id, commentList);
     }
 
     //게시글 수정
-//    @PutMapping("/post/{id}")
-//    public BoardResponseDto update(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, HttpServletRequest request) {
-//        return boardService.update(id, requestDto, request);
-//    }
-
     @PutMapping("/post/{id}")
     public BoardResponseDto update(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return boardService.update(id, requestDto, userDetails.getUser());
     }
 
     //게시글 삭제
-//    @DeleteMapping("/post/{id}")
-//    public String deleteBoard(@PathVariable Long id, HttpServletRequest request) {
-//        return boardService.deleteBoard(id, request);
-//    }
-
     @DeleteMapping("/post/{id}")
     public String deleteBoard(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return boardService.deleteBoard(id, userDetails.getUser());
