@@ -2,11 +2,13 @@ package com.sparta.board.controller;
 
 import com.sparta.board.dto.CommentRequestDto;
 import com.sparta.board.dto.CommentResponseDto;
+import com.sparta.board.entity.Comment;
 import com.sparta.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -30,5 +32,11 @@ public class CommentController {
     @DeleteMapping("/comment/{id}")
     public String deleteComment(@PathVariable Long id, HttpServletRequest request) {
         return commentService.deleteComment(id, request);
+    }
+
+    //댓글 조회
+    @GetMapping("/comment/{boardId}")
+    public List<CommentResponseDto> getComment(@PathVariable Long boardId) {
+        return commentService.getComment(boardId);
     }
 }

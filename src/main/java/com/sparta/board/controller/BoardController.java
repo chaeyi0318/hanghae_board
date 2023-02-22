@@ -54,7 +54,7 @@ public class BoardController {
 
     @GetMapping("/post/{id}")
     public List<BoardResponseDto> getContents(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        List<CommentResponseDto> commentList = commentService.commentsList(id);
+        List<CommentResponseDto> commentList = commentService.getComment(id);
         return boardService.getContents(id, userDetails.getUser());
     }
 

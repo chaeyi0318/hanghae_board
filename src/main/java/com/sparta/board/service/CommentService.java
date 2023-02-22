@@ -110,7 +110,8 @@ public class CommentService {
 
     //댓글 리스트
     @Transactional(readOnly = true)
-    public List<CommentResponseDto> commentsList(Long id) {
-        return commentRepository.findByIdOrderByCreatedAtDesc(id);
+    public List<CommentResponseDto> getComment(Long boardId) {
+        List<CommentResponseDto> commentList = commentRepository.findAllByboardId(boardId);
+        return commentList;
     }
 }
